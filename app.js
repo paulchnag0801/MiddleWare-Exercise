@@ -1,6 +1,10 @@
 const express = require('express')
 const app = express()
 
+app.use((req, res, next) => {
+  const startTime = new Date()
+  const time = startTime.toLocaleString()
+})
 
 app.get('/', (req, res) => {
   res.send('列出全部 Todo')
