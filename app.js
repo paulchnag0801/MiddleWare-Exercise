@@ -1,9 +1,28 @@
 const express = require('express')
 const app = express()
+const port = 3000
 
 app.use((req, res, next) => {
   const startTime = new Date()
   const time = startTime.toLocaleString()
+
+  res.on('finish', () => {
+    const endTime = new Date()
+    const duration = endTime - startTime
+    console.log(
+      time,
+      '|',
+      req.method,
+      'from',
+      req.originalUrl,
+      '|',
+      'total time:',
+      duration,
+      'ms'
+    )
+  })
+
+  next()
 })
 
 app.get('/', (req, res) => {
@@ -22,6 +41,6 @@ app.post('/', (req, res) => {
   res.send('新增一筆  Todo')
 })
 
-app.listen(3000, () => {
-  console.log('App is running on http://localhost:3000')
+app.listen(port, () => {
+  console.log(`App running on port ${port}`)
 })
